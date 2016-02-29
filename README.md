@@ -18,11 +18,28 @@ When running on Heroku, this script relies on [Cairo](http://cairographics.org/)
 
 ### Commands
 
+
 `whats`/`vi <url>` - Do a basic LABEL query, returning the top 10 results  
 `text <url>` - Perform a TEXT query, returning all text found in the image  
-`face <url>` - Perform a FACE query, returning all the faces found, an image showing where, and the Vision API's assessment of their emotions
-`properties <url>` - Perform a IMAGE_PROPERTIES query, returning the dominant colours in the image
-`landmark <url>` - Perform a LANDMARK query, returning the landmarks found in the image and Google Maps links to their locations
+`face <url>` - Perform a FACE query, returning all the faces found, an image showing where, and the Vision API's assessment of their emotions  
+`properties <url>` - Perform a IMAGE_PROPERTIES query, returning the dominant colours in the image  
+`landmark <url>` - Perform a LANDMARK query, returning the landmarks found in the image and Google Maps links to their locations  
+
+
+#### whats
+![what](https://github.com/ryanbateman/vision-bot/raw/master/examples/what.png)
+
+#### text
+![text](https://github.com/ryanbateman/vision-bot/raw/master/examples/text.png)
+
+#### face
+![face](https://github.com/ryanbateman/vision-bot/raw/master/examples/face.png)
+
+#### properties
+![colours](https://github.com/ryanbateman/vision-bot/raw/master/examples/colours.png)
+
+#### landmark
+![landmark](https://github.com/ryanbateman/vision-bot/raw/master/examples/landmarks.png)
 
 ### Notes
 
