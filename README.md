@@ -1,5 +1,5 @@
 # vision-bot
-A Hubot script for query Google's Vision API using an image at some public URL and displaying the results.
+A Hubot script that allows it to query Google's Vision API using an image at some public URL and the display the results.
 
 ### Requirements
 
