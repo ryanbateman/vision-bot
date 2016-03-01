@@ -1,4 +1,7 @@
 # vision-bot
+
+![shibuya query](https://github.com/ryanbateman/vision-bot/raw/master/examples/shibuya.png)  
+  
 A Hubot script that allows it to query Google's Vision API using an image at some public URL and the display the results.
 
 ### Requirements
