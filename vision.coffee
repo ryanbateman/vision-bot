@@ -95,44 +95,47 @@ setupCall = (robot, msg, url, type) ->
 parseResponseAndDisplayData = (msg, body, image) ->
   console.log JSON.stringify body
   responseText = ""
-  if body.responses[0].labelAnnotations?
+  apiResponse = body.responses[0]
+  if Object.keys( apiResponse ).length == 0
+    responseText += "Sorry, I couldn't find anything"
+  if apiResponse.labelAnnotations?
     responseText += "Here's what I see: "
-    for labelAnnotation, index in body.responses[0].labelAnnotations
+    for labelAnnotation, index in apiResponse.labelAnnotations
       responseText += "*#{labelAnnotation.description}* [" + Math.round(labelAnnotation.score * 100) + "%]"
-      if index != body.responses[0].labelAnnotations.length - 1
+      if index != apiResponse.labelAnnotations.length - 1
         responseText += ", "
-  if body.responses[0].imagePropertiesAnnotation?
+  if apiResponse.imagePropertiesAnnotation?
     responseText += "\nDominant colours: "
-    colors = body.responses[0].imagePropertiesAnnotation.dominantColors.colors
+    colors = apiResponse.imagePropertiesAnnotation.dominantColors.colors
     for dominantColor, index in colors
       rgb = [dominantColor.color.red, dominantColor.color.green, dominantColor.color.blue] 
       hexColour = hexify rgb
       responseText += "#{hexColour}"
       if index != colors.length - 1
         responseText += ", "
-  if body.responses[0].textAnnotations?
+  if apiResponse.textAnnotations?
     responseText += "Here's the text I can make out: "
     responseText += "```"
-    for textAnnotation in body.responses[0].textAnnotations
+    for textAnnotation in apiResponse.textAnnotations
       responseText += "" + textAnnotation.description  
     responseText += "```"
-  if body.responses[0].landmarkAnnotations?
+  if apiResponse.landmarkAnnotations?
     responseText += "Here are the landmarks I can make out: \n"
-    for landmark, index in body.responses[0].landmarkAnnotations
+    for landmark, index in apiResponse.landmarkAnnotations
       if landmark.description
         responseText += "*#{landmark.description}* "
       else 
         responseText += "A place I think is here: "
       if landmark.locations
         responseText += "http://maps.google.com/maps?z=12&t=m&q=loc:#{landmark.locations[0].latLng.latitude}+#{landmark.locations[0].latLng.longitude}\n"  
-  if body.responses[0].faceAnnotations?
+  if apiResponse.faceAnnotations?
     responseText += "Here are some faces I can make out: \n"
     img = new Canvas.Image
     img.onload = ->
       canvas = new Canvas(img.width, img.height)
       context = canvas.getContext("2d")
       context.drawImage(img, 0, 0, img.width, img.height)
-      for face, index in body.responses[0].faceAnnotations
+      for face, index in apiResponse.faceAnnotations
         drawFace face, index, context
         responseText += "Face #{index}\n\tJoy: #{face.joyLikelihood}\n\tSorrow: #{face.sorrowLikelihood}\n\tAnger: #{face.angerLikelihood}\n\tSurprise: #{face.surpriseLikelihood}\n\n"
       s3.upload { Key: Date.now() + ".jpg", Bucket: bucket, ACL: "public-read", Body: canvas.toBuffer()}, (err, output) ->
